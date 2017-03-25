@@ -10,4 +10,11 @@ defmodule Rumbl.Auth do
     user = user_id && repo.get(Rumbl.User, user_id) # look up user_id
     assign(conn, :current_user, user) # assign user in connection, avail as `current_user`
   end
+
+  def login(conn, user) do
+    conn
+    |> assign(:current_user, user) # stores given user as `:current_user` assign
+    |> put_session(:user_id, user.id) # puts user in the session
+    |> configure_session(renew: true) # configures session & protects from session fixation attacks
+  end
 end
