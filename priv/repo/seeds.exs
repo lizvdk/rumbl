@@ -14,5 +14,6 @@ alias Rumbl.Repo
 alias Rumbl.Category
 
 for category <- ~w(Cats Dogs Goats Elephants Babies Comedy) do
-  Repo.insert!(%Category{name: category})
+  Repo.get_by(Category, name: category) ||
+    Repo.insert!(%Category{name: category})
 end
